@@ -15,6 +15,7 @@ fetch('http://localhost:3000/api/products/'+id)
         console.log(json);
         produits(json)
 })
+
 // on défini la fonction pour qu'elle affiche les produits de l'api sur la page product.html
 function produits(json){
 
@@ -56,4 +57,10 @@ function produits(json){
         productColors.value = colors;
         productColors.innerHTML = colors;
     }
+}
+
+//on définit la fonction pour le panier
+function addToCart(json){
+    let button = document.querySelector("#addToCart")
+
 }
