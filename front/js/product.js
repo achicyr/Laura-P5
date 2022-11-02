@@ -41,8 +41,19 @@ function produits(json){
     title.innerText=json.name;
     price.innerText=json.price;
     description.innerText=json.description;
-    
+
+    // on fait une boucle for of 
+    for (let colors of json.colors){
+        console.log(colors);
+
+        // on créer l'élément option
+        let productColors = document.createElement("option");
+
+        // on récupère l'id colors et on l'ajoute au noeud
+        document.querySelector("#colors").appendChild(productColors);
+
+        // on ajoute les attributs
+        productColors.value = colors;
+        productColors.innerHTML = colors;
+    }
 }
-
-
-
