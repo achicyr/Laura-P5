@@ -18,18 +18,31 @@ fetch('http://localhost:3000/api/products/'+id)
 // on défini la fonction pour qu'elle affiche les produits de l'api sur la page product.html
 function produits(json){
 
-    // on récupère la class ".items__img" dans le DOM
+    // on récupère la class ".items__img" dans le div
     let div = document.querySelector(".item__img");
     console.log(div)
-    
-    // on créer de nouveaux éléments
-    let img = document.createElement('img');
 
-    // on ajoute un nouvel attribut
-    img.src=json.imageUrl
+    // on créer un nouveau élément img
+    let img = document.createElement('img');
+    
+    // on ajoute un nouvel attribut pour l'image
+    img.src=json.imageUrl;
+    img.alt=json.altTxt;
 
     // Ajout d'un élément au noeud
     div.appendChild(img);
+
+    // on récupère les identifiants de la div __titlePrice et __description
+    let title = document.querySelector('#title')
+    let price = document.querySelector('#price')
+    let description = document.querySelector('#description')
+
+    // on ajoute les attributs
+    title.innerText=json.name;
+    price.innerText=json.price;
+    description.innerText=json.description;
+    
 }
+
 
 
