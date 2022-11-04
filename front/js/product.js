@@ -9,6 +9,7 @@ if(search_params.has('id')) {
 console.log(id)
 
 // On récupère la liste d'un produit
+
 fetch('http://localhost:3000/api/products/'+id)
     .then((response) => response.json())
     .then((json) => {
@@ -57,10 +58,32 @@ function produits(json){
         productColors.value = colors;
         productColors.innerHTML = colors;
     }
+    console.log("couleur ok");
 }
 
-//on définit la fonction pour le panier
-function addToCart(json){
-    let button = document.querySelector("#addToCart")
+//On récupere : l'id du produit et de la couleur + la class de la quantité 
+let button = document.querySelector("#addToCart");
+let select = document.querySelector("#colors");
+let div = document.querySelector("#quantity");
 
-}
+// on écoute le click sur l'ajout du panier
+button.addEventListener('click',function (){
+    console.log('click ok')
+    // on récupere les valeurs de quantité et de couleurs du produit
+    let valueQuantity = div.value;
+    let valueColor = select.value;
+    //recuperation du contenu du panier
+    let buttonStr = localStorage.getItem('button');
+    console.log('localStorage ok ')
+    if (buttonStr == null){
+        let button = {
+            totalQuantity : 0,
+            products: []
+        }
+    } else {
+        let button=JSON.parse(buttonStr)
+    }
+    let produit = {
+        id: produit.__id,
+    }
+} )
