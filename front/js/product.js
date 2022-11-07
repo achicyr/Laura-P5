@@ -89,6 +89,7 @@ button.addEventListener('click',function (){
 } )*/
 
 function addToCart(){
+    console.log("click ok ")
     //// on récupère les identifiants de la quantité et de la couleur
     let quantityDiv = document.querySelector("#quantity");
     let colorsSelect = document.querySelector("#colors");
@@ -115,4 +116,23 @@ function addToCart(){
 
         let total = parseInt(renderProductQuantity) + parseInt(newProductQuantity);
         console.log("le total du produit est " + total);
+
+        choice = {
+            name: produits.name,
+            id: produits._id,
+            color: colorsSelect.value,
+            quantity: total,
+            imageUrl: produits.imageUrl,
+            altTxt: produits.altTxt,
+            price: produits.price
+        };
+        productsList.push(choice);
+        choiceString = JSON.stringify(productsList);
+        localStorage.setItem(productName, choiceString);
 }}
+let button = document.querySelector("#addToCart");
+
+// enregistrer les donnees de selection de produit en local 
+window.onload = function() {
+    button.addEventListener("click", addToCart);
+    }
