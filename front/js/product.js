@@ -89,9 +89,11 @@ button.addEventListener('click',function (){
 } )*/
 
 function addToCart(){
+    //// on récupère les identifiants de la quantité et de la couleur
     let quantityDiv = document.querySelector("#quantity");
     let colorsSelect = document.querySelector("#colors");
 
+    //// on crée le produit avec ses caractéristiques; nom,id,couleur,image,quantité,prix et le texte alternatif
     let choice = {
         name: produits.name,
         id: produits._id,
@@ -101,4 +103,16 @@ function addToCart(){
         altTxt: produits.altTxt,
         price: produits.price
     }
-}
+    let productName = produits.name + colorsSelect.value;
+    let productsList = [];
+
+    let newProductQuantity = choice.quantity;
+    
+    if(localStorage.getItem(productName)) {
+        let renderProduct = JSON.parse(localStorage.getItem(productName));
+       
+        let renderProductQuantity = renderProduct[0].quantity
+
+        let total = parseInt(renderProductQuantity) + parseInt(newProductQuantity);
+        console.log("le total du produit est " + total);
+}}
