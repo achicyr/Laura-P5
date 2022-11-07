@@ -90,6 +90,7 @@ button.addEventListener('click',function (){
 
 function addToCart(){
     console.log("click ok ")
+
     //// on récupère les identifiants de la quantité et de la couleur
     let quantityDiv = document.querySelector("#quantity");
     let colorsSelect = document.querySelector("#colors");
@@ -104,18 +105,21 @@ function addToCart(){
         altTxt: produits.altTxt,
         price: produits.price
     }
+    // productName prend la valeur du nom + de la couleur
     let productName = produits.name + colorsSelect.value;
+    // on déclare productList en array
     let productsList = [];
-
+    // on déclare le nouveau produit avec ses caractéristiques stockés dans choice
     let newProductQuantity = choice.quantity;
-    
-    if(localStorage.getItem(productName)) {
-        let renderProduct = JSON.parse(localStorage.getItem(productName));
-       
-        let renderProductQuantity = renderProduct[0].quantity
 
-        let total = parseInt(renderProductQuantity) + parseInt(newProductQuantity);
-        console.log("le total du produit est " + total);
+    // si on renvoie notre tableau (productName)
+    if(localStorage.getItem(productName)) {
+        let renderProduct = JSON.parse(localStorage.getItem(productName)); // convertir du texte en objet Javascript avec JSON.parse
+       
+        let renderProductQuantity = renderProduct[0].quantity // renderProductQuantity prend la valeur de renderProduct[0].quantity
+
+        let total = parseInt(renderProductQuantity) + parseInt(newProductQuantity); //parseInt analyse une string (renderProductQuantity et newProductQuantity) et renvoie un entier
+        console.log("total produit:" + total);
 
         choice = {
             name: produits.name,
@@ -126,10 +130,29 @@ function addToCart(){
             altTxt: produits.altTxt,
             price: produits.price
         };
-        productsList.push(choice);
-        choiceString = JSON.stringify(productsList);
-        localStorage.setItem(productName, choiceString);
-}}
+        productsList.push(choice);// ajout de l'élément dans l'array
+        choiceString = JSON.stringify(productsList);// il faut convertir une valeur en string
+        localStorage.setItem(productName, choiceString);// ajout du duo clé-valeur dans le localStorage
+
+
+
+        // couleur et quantité
+
+        // lorsqu'on anjoute un produit au panier si celui ci n'était pas déja présent, on ajoute un nouvel élément dans l'array
+        if (colorsSelect.value=""){ // si la couleur est = "" alors il faut retourner une alerte ("Choisir la couleur")
+            result = window.alert("Choisir la couleur")
+        } 
+        console.log()
+        if (quantityDiv=0){ // si la quantité est = 0 alors il faut retourner une alerte ("Quantité invalide")
+            result = window.alert("Quantité invalide")
+        }
+        else {
+            productsList.push(choice); // ajout de l'élément dans l'array
+            choiceString = JSON.stringify(productsList); // il faut convertir une valeur en string
+            localStorage.setItem(productName, choiceString); // ajout du duo clé-valeur dans le localStorage
+        }
+    }
+}
 let button = document.querySelector("#addToCart");
 
 // enregistrer les donnees de selection de produit en local 
