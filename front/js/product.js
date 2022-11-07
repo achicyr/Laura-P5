@@ -61,7 +61,7 @@ function produits(json){
     console.log("couleur ok");
 }
 
-//On récupere : l'id du produit et de la couleur + la class de la quantité 
+/*//On récupere : l'id du produit et de la couleur + la class de la quantité 
 let button = document.querySelector("#addToCart");
 let select = document.querySelector("#colors");
 let div = document.querySelector("#quantity");
@@ -86,4 +86,19 @@ button.addEventListener('click',function (){
     let produit = {
         id: produit.__id,
     }
-} )
+} )*/
+
+function addToCart(){
+    let quantityDiv = document.querySelector("#quantity");
+    let colorsSelect = document.querySelector("#colors");
+
+    let choice = {
+        name: produits.name,
+        id: produits._id,
+        color: colorsSelect.value,
+        quantity: quantityDiv.value,
+        imageUrl: produits.imageUrl,
+        altTxt: produits.altTxt,
+        price: produits.price
+    }
+}
