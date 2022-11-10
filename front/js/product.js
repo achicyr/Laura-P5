@@ -1,24 +1,25 @@
 //récupérer les parametres de l'url avec URLSearchParams
 var str = document.location;
 var url = new URL(str);
-var search_params = new URLSearchParams(url.search); 
-if(search_params.has('id')) {
-  var id = search_params.get('id');
+var search_params = new URLSearchParams(url.search);
+if (search_params.has('id')) {
+    var id = search_params.get('id');
 }
-
+let oneProduct
 console.log(id)
 
 // On récupère la liste d'un produit
 
-fetch('http://localhost:3000/api/products/'+id)
-    .then((response) => response.json())
+fetch('http://localhost:3000/api/products/' + id)  // on va chercher l'url que l'on souhaite
+    .then((response) => response.json())  // on souhaite une reponse en json
     .then((json) => {
-        console.log(json);
+        console.log(json); // on voit ce qu'il en retourne
         produits(json)
-})
+        oneProduct = json
+    })
 
 // on défini la fonction pour qu'elle affiche les produits de l'api sur la page product.html
-function produits(json){
+function produits(json) {
 
     // on récupère la class ".items__img" dans le div
     let div = document.querySelector(".item__img");
@@ -26,10 +27,10 @@ function produits(json){
 
     // on créer un nouveau élément img
     let img = document.createElement('img');
-    
+
     // on ajoute un nouvel attribut pour l'image
-    img.src=json.imageUrl;
-    img.alt=json.altTxt;
+    img.src = json.imageUrl;
+    img.alt = json.altTxt;
 
     // Ajout d'un élément au noeud
     div.appendChild(img);
@@ -40,12 +41,12 @@ function produits(json){
     let description = document.querySelector('#description')
 
     // on ajoute les attributs
-    title.innerText=json.name;
-    price.innerText=json.price;
-    description.innerText=json.description;
+    title.innerText = json.name;
+    price.innerText = json.price;
+    description.innerText = json.description;
 
     // on fait une boucle for of 
-    for (let colors of json.colors){
+    for (let colors of json.colors) {
         console.log(colors);
 
         // on créer l'élément option
@@ -88,8 +89,8 @@ button.addEventListener('click',function (){
     }
 } )*/
 
-function addToCart(){
-    console.log("click ok ")
+function addToCart() {
+    console.log("click ok " + oneProduct)
 
     //// on récupère les identifiants de la quantité et de la couleur
     let quantityDiv = document.querySelector("#quantity");
@@ -97,65 +98,67 @@ function addToCart(){
 
     //// on crée le produit avec ses caractéristiques; nom,id,couleur,image,quantité,prix et le texte alternatif
     let choice = {
-        name: produits.name,
-        id: produits._id,
+        id: oneProduct._id,
         color: colorsSelect.value,
         quantity: quantityDiv.value,
-        imageUrl: produits.imageUrl,
-        altTxt: produits.altTxt,
-        price: produits.price
     }
-    // productName prend la valeur du nom + de la couleur
-    let productName = produits.name + colorsSelect.value;
-    // on déclare productList en array
+    console.log(choice)
+    // on déclare le productName qui prend la valeur du nom + de la couleur
+    let productId = oneProduct.name + colorsSelect.value;
+    // on déclare productList en array vide
     let productsList = [];
     // on déclare le nouveau produit avec ses caractéristiques stockés dans choice
     let newProductQuantity = choice.quantity;
+    
+    let ls = localStorage.getItem('cart')
+    if (ls == null)
+        localStorage.setItem("cart", "{}")
 
-    // si on renvoie notre tableau (productName)
-    if(localStorage.getItem(productName)) {
-        let renderProduct = JSON.parse(localStorage.getItem(productName)); // convertir du texte en objet Javascript avec JSON.parse
-       
-        let renderProductQuantity = renderProduct[0].quantity // renderProductQuantity prend la valeur de renderProduct[0].quantity
+    let renderProduct = JSON.parse(localStorage.getItem("cart")); // convertir du texte en objet Javascript avec JSON.parse
+    console.log(renderProduct)
+    if (renderProduct[productId]){
+        console.log("existe deja")
+    }else {
+        console.log('n existe pas encore')
+        renderProduct [productId] = choice 
+        renderProduct = JSON.stringify(renderProduct)
+        localStorage.setItem('cart', renderProduct)
+    }
 
-        let total = parseInt(renderProductQuantity) + parseInt(newProductQuantity); //parseInt analyse une string (renderProductQuantity et newProductQuantity) et renvoie un entier
-        console.log("total produit:" + total);
+    let renderProductQuantity = renderProduct[productId].quantity // renderProductQuantity prend la valeur de renderProduct[0].quantity
 
-        choice = {
-            name: produits.name,
-            id: produits._id,
-            color: colorsSelect.value,
-            quantity: total,
-            imageUrl: produits.imageUrl,
-            altTxt: produits.altTxt,
-            price: produits.price
-        };
-        productsList.push(choice);// ajout de l'élément dans l'array
-        choiceString = JSON.stringify(productsList);// il faut convertir une valeur en string
-        localStorage.setItem(productName, choiceString);// ajout du duo clé-valeur dans le localStorage
+    
+    let total = parseInt(renderProductQuantity) + parseInt(newProductQuantity); //parseInt analyse une string (renderProductQuantity et newProductQuantity) et renvoie un entier
+    
+    console.log('total produit:'+ total);
 
+    choice = {
+        id: oneProduct._id,
+        color: colorsSelect.value,
+        quantity: total,
+    };
+    productsList.push(choice);// ajout de l'élément dans l'array
+    choiceString = JSON.stringify(productsList);// il faut convertir la valeur
+    localStorage.setItem(productId, choiceString);// ajout du duo clé-valeur dans le localStorage
 
+    // couleur et quantité
 
-        // couleur et quantité
-
-        // lorsqu'on anjoute un produit au panier si celui ci n'était pas déja présent, on ajoute un nouvel élément dans l'array
-        if (colorsSelect.value=""){ // si la couleur est = "" alors il faut retourner une alerte ("Choisir la couleur")
-            result = window.alert("Choisir la couleur")
-        } 
-        console.log()
-        if (quantityDiv=0){ // si la quantité est = 0 alors il faut retourner une alerte ("Quantité invalide")
-            result = window.alert("Quantité invalide")
-        }
-        else {
-            productsList.push(choice); // ajout de l'élément dans l'array
-            choiceString = JSON.stringify(productsList); // il faut convertir une valeur en string
-            localStorage.setItem(productName, choiceString); // ajout du duo clé-valeur dans le localStorage
-        }
+    // si la couleur est = "" alors il faut retourner une alerte ("Choisir la couleur")
+    if (colorsSelect.value == "") {
+        result = window.alert("Choisir la couleur")
+    }
+    if (quantityDiv == 0) { // si la quantité est = 0 alors il faut retourner une alerte ("Quantité invalide")
+        result = window.alert("Quantité invalide")
+    } else {
+        productsList.push(choice); // ajout de l'élément dans l'array
+        choiceString = JSON.stringify(productsList); // il faut convertir la valeur 
+        localStorage.setItem(productId, choiceString); // ajout du duo clé-valeur dans le localStorage
     }
 }
+
 let button = document.querySelector("#addToCart");
 
 // enregistrer les donnees de selection de produit en local 
-window.onload = function() {
+window.onload = function () {
     button.addEventListener("click", addToCart);
-    }
+}
