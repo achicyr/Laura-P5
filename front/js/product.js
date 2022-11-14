@@ -62,33 +62,6 @@ function produits(json) {
     console.log("couleur ok");
 }
 
-/*//On récupere : l'id du produit et de la couleur + la class de la quantité 
-let button = document.querySelector("#addToCart");
-let select = document.querySelector("#colors");
-let div = document.querySelector("#quantity");
-
-// on écoute le click sur l'ajout du panier
-button.addEventListener('click',function (){
-    console.log('click ok')
-    // on récupere les valeurs de quantité et de couleurs du produit
-    let valueQuantity = div.value;
-    let valueColor = select.value;
-    //recuperation du contenu du panier
-    let buttonStr = localStorage.getItem('button');
-    console.log('localStorage ok ')
-    if (buttonStr == null){
-        let button = {
-            totalQuantity : 0,
-            products: []
-        }
-    } else {
-        let button=JSON.parse(buttonStr)
-    }
-    let produit = {
-        id: produit.__id,
-    }
-} )*/
-
 function addToCart() {
     console.log("click ok " + oneProduct)
 
@@ -109,37 +82,14 @@ function addToCart() {
     let productsList = [];
     // on déclare le nouveau produit avec ses caractéristiques stockés dans choice
     let newProductQuantity = choice.quantity;
-    
+
     let ls = localStorage.getItem('cart')
     if (ls == null)
         localStorage.setItem("cart", "{}")
 
     let renderProduct = JSON.parse(localStorage.getItem("cart")); // convertir du texte en objet Javascript avec JSON.parse
     console.log(renderProduct)
-    if (renderProduct[productId]){
-        console.log("existe deja")
-    }else {
-        console.log('n existe pas encore')
-        renderProduct [productId] = choice 
-        renderProduct = JSON.stringify(renderProduct)
-        localStorage.setItem('cart', renderProduct)
-    }
-
-    let renderProductQuantity = renderProduct[productId].quantity // renderProductQuantity prend la valeur de renderProduct[0].quantity
-
-    
-    let total = parseInt(renderProductQuantity) + parseInt(newProductQuantity); //parseInt analyse une string (renderProductQuantity et newProductQuantity) et renvoie un entier
-    
-    console.log('total produit:'+ total);
-
-    choice = {
-        id: oneProduct._id,
-        color: colorsSelect.value,
-        quantity: total,
-    };
-    productsList.push(choice);// ajout de l'élément dans l'array
-    choiceString = JSON.stringify(productsList);// il faut convertir la valeur
-    localStorage.setItem(productId, choiceString);// ajout du duo clé-valeur dans le localStorage
+    let renderProductQuantity = renderProduct[productId]?.quantity // renderProductQuantity prend la valeur de renderProduct[productId].quantity
 
     // couleur et quantité
 
@@ -147,12 +97,35 @@ function addToCart() {
     if (colorsSelect.value == "") {
         result = window.alert("Choisir la couleur")
     }
-    if (quantityDiv == 0) { // si la quantité est = 0 alors il faut retourner une alerte ("Quantité invalide")
+    else if (quantityDiv.value == 0) { // si la quantité est = 0 alors il faut retourner une alerte ("Quantité invalide")
         result = window.alert("Quantité invalide")
     } else {
-        productsList.push(choice); // ajout de l'élément dans l'array
-        choiceString = JSON.stringify(productsList); // il faut convertir la valeur 
-        localStorage.setItem(productId, choiceString); // ajout du duo clé-valeur dans le localStorage
+        console.log(renderProduct)
+        if (renderProduct[productId]) {
+            console.log("existe deja")
+
+            let total = parseInt(renderProductQuantity) + parseInt(newProductQuantity);
+            console.log('total produit:' + total);
+            
+            renderProduct[productId].quantity = total
+            renderProduct = JSON.stringify(renderProduct)
+            localStorage.setItem('cart', renderProduct)
+            
+        } else {
+            console.log('n existe pas encore')
+            renderProduct[productId] = choice
+            renderProduct = JSON.stringify(renderProduct)
+            localStorage.setItem('cart', renderProduct)
+
+            /*choice = {
+                id: oneProduct._id,
+                color: colorsSelect.value,
+                quantity: renderProductQuantity,
+            };
+            productsList.push(choice);// ajout de l'élément dans l'array
+            choiceString = JSON.stringify(productsList);// il faut convertir la valeur
+            localStorage.setItem(productId, choiceString);// ajout du duo clé-valeur dans le localStorage*/
+        }
     }
 }
 
