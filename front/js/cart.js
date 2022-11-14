@@ -12,20 +12,20 @@
 
 console.log(localStorage);
 
-let productCart = JSON.parse(localStorage.getItem("object"));
-console.log(productCart)
+let renderProduct = JSON.parse(localStorage.getItem("cart"));
+console.log(renderProduct)
 
-let oneEmptyCart = document.getElementById("cart__items");
+let oneEmptyCart = document.querySelector("#cart__items");
 
 // function si (if) le pannier est vide 
 function affectInCart() {
-    if (productCart === null) {
+    if (renderProduct === null) {
         let emptyCart = "Votre panier est vide";
         oneEmptyCart.innerHTML = emptyCart;
 
     // sinon (else) : insertion des éléments
     } else {
-        for (let object in productCart) {
+        for (let cart in renderProduct) {
 
             let article = document.createElement("article"); 
             document.querySelector("#cart__items").appendChild(article) 
@@ -46,23 +46,23 @@ function affectInCart() {
 
 
             article.classList.add("cart__item"); 
-            article.setAttribute("data-id", productCart[object].id); 
-            article.setAttribute("data-color", productCart[object].color);
+            article.setAttribute("data-id", renderProduct[cart].id); 
+            article.setAttribute("data-color", renderProduct[cart].color);
 
             div1.classList.add("cart__item__img");  
 
-            img.setAttribute("src", productCart[object].imageUrl); 
-            img.setAttribute("alt", productCart[object].altTxt);  
+            img.setAttribute("src", renderProduct[cart].imageUrl); 
+            img.setAttribute("alt", renderProduct[cart].altTxt);  
 
             div2.classList.add("cart__item__content"); 
 
             div3.classList.add("cart__item__content__description"); 
 
-            h2.innerHTML = productCart[object].name; 
+            h2.innerHTML = renderProduct[cart].name; 
 
-            p1.innerHTML = productCart[object].color; 
+            p1.innerHTML = renderProduct[cart].color; 
 
-            p2.innerHTML = productCart[object].price + "€"; 
+            p2.innerHTML = renderProduct[cart].price + "€"; 
 
             div4.classList.add('cart__item__content__settings'); 
 
@@ -76,7 +76,7 @@ function affectInCart() {
             input.setAttribute("name", "itemQuantity") 
             input.setAttribute("min", "1") 
             input.setAttribute("max", "100") 
-            input.value = productCart[object].quantity 
+            input.value = renderProduct[cart].quantity 
 
             div6.classList.add("cart__item__content__settings__delete") 
 
@@ -125,7 +125,7 @@ function totalCart (){
     totalPrice = 0;
 
     for (var i = 0; i < myLength; ++i){
-        totalPrice += (elemsQtt[i].valueAsNumber * productCart[i].price)
+        totalPrice += (elemsQtt[i].valueAsNumber * renderProduct[i]?.price)
     }
 
     let productTotalPrice = document.getElementById('totalPrice');
