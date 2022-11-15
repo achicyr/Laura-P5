@@ -76,14 +76,18 @@ function addToCart() {
         quantity: quantityDiv.value,
     }
     console.log(choice)
+
     // on déclare le productName qui prend la valeur du nom + de la couleur
     let productId = oneProduct.name + colorsSelect.value;
+
     // on déclare productList en array vide
     let productsList = [];
+
     // on déclare le nouveau produit avec ses caractéristiques stockés dans choice
     let newProductQuantity = choice.quantity;
 
     let ls = localStorage.getItem('cart')
+    
     if (ls == null)
         localStorage.setItem("cart", "{}")
 

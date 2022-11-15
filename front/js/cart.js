@@ -10,6 +10,14 @@
 // afficher les resultats -- boucle sur le localstorage
 // faire le formulaire
 
+
+
+fetch('http://localhost:3000/api/products/')  
+    .then((response) => response.json())  
+    .then((json) => {
+        console.log(json); 
+    })
+
 console.log(localStorage);
 
 let renderProduct = JSON.parse(localStorage.getItem("cart"));
@@ -76,7 +84,7 @@ function affectInCart() {
             input.setAttribute("name", "itemQuantity") 
             input.setAttribute("min", "1") 
             input.setAttribute("max", "100") 
-            input.value = renderProduct[cart].quantity 
+            input.value = renderProduct[cart]?.quantity 
 
             div6.classList.add("cart__item__content__settings__delete") 
 
@@ -102,6 +110,14 @@ function affectInCart() {
             div5.appendChild(input) 
 
             div6.appendChild(p4) 
+
+            let choice = {
+                name: renderProduct[cart].name,
+                imageUrl : renderProduct[cart].imageUrl,
+                altTxt: renderProduct[cart].altTxt,
+                price : renderProduct[cart].price
+            }
+            console.log(choice)
         }
     }
 }
