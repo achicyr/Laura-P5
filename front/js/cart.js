@@ -10,12 +10,11 @@
 // afficher les resultats -- boucle sur le localstorage
 // faire le formulaire
 
-
-
-fetch('http://localhost:3000/api/products/')  
+fetch ('http://localhost:3000/api/products/')  
     .then((response) => response.json())  
     .then((json) => {
         console.log(json); 
+        affectInCart(json)
     })
 
 console.log(localStorage);
@@ -24,19 +23,23 @@ let renderProduct = JSON.parse(localStorage.getItem("cart"));
 console.log(renderProduct)
 
 let oneEmptyCart = document.querySelector("#cart__items");
+console.log(oneEmptyCart)
 
 // function si (if) le pannier est vide 
-function affectInCart() {
+async function affectInCart() {
     if (renderProduct === null) {
         let emptyCart = "Votre panier est vide";
         oneEmptyCart.innerHTML = emptyCart;
 
     // sinon (else) : insertion des éléments
     } else {
+        
         for (let cart in renderProduct) {
 
             let article = document.createElement("article"); 
             document.querySelector("#cart__items").appendChild(article) 
+
+            console.log(oneEmptyCart)
 
             let div1 = document.createElement("div"); 
             let img = document.createElement("img"); 
@@ -56,21 +59,22 @@ function affectInCart() {
             article.classList.add("cart__item"); 
             article.setAttribute("data-id", renderProduct[cart].id); 
             article.setAttribute("data-color", renderProduct[cart].color);
+            
 
             div1.classList.add("cart__item__img");  
 
-            img.setAttribute("src", renderProduct[cart].imageUrl); 
-            img.setAttribute("alt", renderProduct[cart].altTxt);  
+            img.setAttribute("src", "${imageUrl}"); 
+            img.setAttribute("alt", "${altTxt}");  
 
             div2.classList.add("cart__item__content"); 
 
             div3.classList.add("cart__item__content__description"); 
 
-            h2.innerHTML = renderProduct[cart].name; 
+            h2.innerHTML = "${name}"; 
 
             p1.innerHTML = renderProduct[cart].color; 
 
-            p2.innerHTML = renderProduct[cart].price + "€"; 
+            p2.innerHTML = "${price}" + "€"; 
 
             div4.classList.add('cart__item__content__settings'); 
 
@@ -111,11 +115,12 @@ function affectInCart() {
 
             div6.appendChild(p4) 
 
+            
             let choice = {
-                name: renderProduct[cart].name,
-                imageUrl : renderProduct[cart].imageUrl,
-                altTxt: renderProduct[cart].altTxt,
-                price : renderProduct[cart].price
+                name: "${name}",
+                imageUrl : "${renderProductimageUrl}",
+                altTxt: "${altTxt}",
+                price : "${price}"
             }
             console.log(choice)
         }
@@ -123,7 +128,54 @@ function affectInCart() {
 }
 affectInCart();
 
-function totalCart (){
+
+
+
+
+
+
+
+
+
+
+
+/**
+     * * CRÉE UN NOEUD HTML CONTENANT LES INFOS À AFFICHER D'UN PRODUIT
+     * @param {object} obj contient les données d'un produit
+     * @param {object} order contient les données de commande d'un produit
+     * @returns le noeud html contenant le produit à afficher sur la page panier
+     */
+    
+/*cartProduct = (renderProduct, localStorage = false) => {
+    let div = document.createElement('div')
+    , { _id,imageUrl,altTxt,name,orders,orders_,price,color } = renderProduct
+    div.innerHTML = `
+        <article class="cart__item" data-id="${_id}" data-color="${color}" data-match="${_id+color}">
+            <div class="cart__item__img">
+                <img src="${imageUrl}" alt="${altTxt}">
+            </div>
+            <div class="cart__item__content">
+                <div class="cart__item__content__description">
+                    <h2>${name}</h2>
+                    <p>${color}</p>
+                    <p>${price} €</p>
+                </div>
+                <div class="cart__item__content__settings">
+                    <div class="cart__item__content__settings__quantity">
+                        <p>Qté : </p>
+                        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${order?order["qty"]:orders[color]}">
+                    </div>
+                        <div class="cart__item__content__settings__delete">
+                        <p class="deleteItem">Supprimer</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    `
+    return div.querySelector('article')
+}*/
+
+/*function totalCart (){
 
     // récupération de la quantité total
     let elemsQtt = document.getElementsByClassName('itemQuantity')
@@ -149,4 +201,4 @@ function totalCart (){
     console.log(totalPrice)
 }
 
-totalCart()
+totalCart()*/

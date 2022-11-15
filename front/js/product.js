@@ -74,6 +74,7 @@ function addToCart() {
         id: oneProduct._id,
         color: colorsSelect.value,
         quantity: quantityDiv.value,
+        
     }
     console.log(choice)
 
@@ -87,7 +88,7 @@ function addToCart() {
     let newProductQuantity = choice.quantity;
 
     let ls = localStorage.getItem('cart')
-    
+
     if (ls == null)
         localStorage.setItem("cart", "{}")
 
