@@ -79,7 +79,7 @@ function addToCart() {
     console.log(choice)
 
     // on déclare le productName qui prend la valeur du nom + de la couleur
-    let productId = oneProduct.name + colorsSelect.value;
+    let productId =  oneProduct.name + colorsSelect.value;
 
     // on déclare productList en array vide
     let productsList = [];

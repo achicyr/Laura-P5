@@ -10,18 +10,16 @@
 // afficher les resultats -- boucle sur le localstorage
 // faire le formulaire
 
- /**
-     * * CRÉE UN NOEUD HTML CONTENANT LES INFOS À AFFICHER D'UN PRODUIT
-     * @param {name} obj contient les données d'un produit
-     * @param {object} order contient les données de commande d'un produit
-     * @returns le noeud html contenant le produit à afficher sur la page panier
-     */
+
 
 fetch ('http://localhost:3000/api/products/')  
     .then((response) => response.json())  
     .then((json) => {
         console.log(json); 
-        affectInCart(json)
+        affectInCart(json);
+        totalCart (json);
+        document.querySelectorAll(".itemQuantity").forEach(item => {item.addEventListener('change', modifyQtt); item.JSON = json; });
+        document.querySelectorAll(".deleteItem").forEach(item => {item.addEventListener('click', deleteArticle); item.JSON = json; });
     })
 
 console.log(localStorage);
@@ -40,15 +38,16 @@ async function affectInCart(json) {
 
     // sinon (else) : insertion des éléments
     } else {
-        
+        console.log(renderProduct)
         for (let cart in renderProduct) {
             console.log(json)
-            let tmp = json.find(elt=>elt.id==cart.id);
-            let {altTxt, imageUrl, id,name, price,} = tmp  // destucturing
+            let tmp = json.find(elt => elt._id == renderProduct[cart].id);
+            
+            let {altTxt, imageUrl, id, name, price} = tmp  // destucturing
             console.log(tmp)
-            console.log(cart)
+
             let productIterated = renderProduct[cart]
-            let template = `<article class="cart__item" data-id="${id}" data-color="${productIterated.color}">
+            let template = `<article class="cart__item" data-id="${productIterated.id}" data-color="${productIterated.color}">
                 <div class="cart__item__img">
                   <img src="${imageUrl}" alt="${altTxt}">
                 </div>
@@ -70,36 +69,60 @@ async function affectInCart(json) {
                 </div>
               </article>`
             
-            cart__items.innerHTML= template
+            cart__items.innerHTML += template
         }
     }
 }
-function totalCart (){
 
-    // récupération de la quantité total
-    let elemsQtt = document.getElementsByClassName('itemQuantity')
-    let myLength = elemsQtt.length,
-    totalQtt = 0;
 
-    for (let i = 0; i < myLength; ++i){
-        totalQtt += elemsQtt[i].valueAsNumber;
-    }
+async function totalCart (json){
+  let cart = JSON.parse(localStorage.getItem("cart"));
+  totalQtt = 0;
+  totalPrice = 0;
 
-    let productTotalQuantity = document.getElementById("totalQuantity");
-    productTotalQuantity.innerHTML = totalQtt;
-    console.log(totalQtt);
+  for (item in cart) {
+    let jsonItem = json.find(elt => elt._id == cart[item].id);
+    totalQtt += Number(cart[item].quantity);
+    totalPrice += jsonItem.price * Number(cart[item].quantity);
+  }
+  let productTotalQuantity = document.getElementById("totalQuantity");
+  productTotalQuantity.innerHTML = totalQtt;
+  // récupération du prix total
+  let productTotalPrice = document.getElementById('totalPrice');
+  productTotalPrice.innerHTML = totalPrice;
 
-    totalPrice = 0;
-
-    for (var i = 0; i < myLength; ++i){
-        totalPrice += (elemsQtt[i].valueAsNumber * renderProduct[i]?.price)
-    }
-
-    let productTotalPrice = document.getElementById('totalPrice');
-    productTotalPrice.innerHTML = totalPrice;
-    console.log(totalPrice)
 }
 
+//modifier la quantité de la page panier avec addEentListener de type change et la méthode Element.closest
 
+async function modifyQtt(e) {
+  let article = e.target.closest("article");
+  let dataColor = article.getAttribute("data-color");
+  let dataName = article.getElementsByTagName("h2")[0].innerHTML;
+
+  let cart = JSON.parse(localStorage.getItem('cart'));
+
+  cart[dataName+dataColor].quantity = e.target.value;
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  totalCart(e.target.JSON)
+
+}
+
+//supprimer des produits 
+async function deleteArticle(e){
+  let article = e.target.closest("article");
+  let dataColor = article.getAttribute("data-color");
+  let dataName = article.getElementsByTagName("h2")[0].innerHTML;
+
+  let cart = JSON.parse(localStorage.getItem('cart'));
+
+  delete cart[dataName+dataColor];
+  article.remove();
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  totalCart(e.target.JSON);
+
+}
 
 
