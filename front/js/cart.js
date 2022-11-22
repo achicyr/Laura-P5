@@ -20,6 +20,7 @@ fetch ('http://localhost:3000/api/products/')
         totalCart (json);
         document.querySelectorAll(".itemQuantity").forEach(item => {item.addEventListener('change', modifyQtt); item.JSON = json; });
         document.querySelectorAll(".deleteItem").forEach(item => {item.addEventListener('click', deleteArticle); item.JSON = json; });
+        
     })
 
 console.log(localStorage);
@@ -109,7 +110,8 @@ async function modifyQtt(e) {
 
 }
 
-//supprimer des produits 
+//Supprimer des produits 
+
 async function deleteArticle(e){
   let article = e.target.closest("article");
   let dataColor = article.getAttribute("data-color");
@@ -123,6 +125,164 @@ async function deleteArticle(e){
   localStorage.setItem("cart", JSON.stringify(cart));
   totalCart(e.target.JSON);
 
-}
+};
+
+// formulaire avec Regexp
+
+function validateFormulaire(){
+  let form = document.querySelector(".cart__order__form");
+
+  console.log(form.email);
+
+  // Ecouter la modification de l'email
+  form.email.addEventListener('change', function(){
+    validEmail(this);
+  });
+
+  /********************************** Validation EMAIL ******************************/
+
+  let validEmail = function(inputEmail){
+    // creation de la regExp pour validation email
+    let emailRegExp = new RegExp(
+      '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g'
+      );
+
+  let testEmail = emailRegExp.test(inputEmail.value);
+
+  // récupération de la balise suivante (p)
+  let p = inputEmail.nextElementSibling;
+
+  console.log(testEmail)
+
+  // condition if/else
+  if (testEmail){
+    p.innerHTML = 'Email valide';
+  } else {
+    p.innerHTML = 'Email non valide'
+  }
+  }
+  console.log(form.firstName)
+
+  // Ecouter la modification du firstName
+  form.firstName.addEventListener('change', function(){
+    validFirstName(this);
+  });
+
+  /********************************** Validation FIRSTNAME ******************************/
+
+  let validFirstName = function(inputFirstName){
+    let firstNameRegExp = new RegExp(
+      "^[a-zA-Z ,.'-]+$", 'g'
+      );
+
+  let testFirstName = firstNameRegExp.test(inputFirstName.value);
+
+  // récupération de la balise suivante (p)
+  let p = inputFirstName.nextElementSibling;
+  console.log(testFirstName)
+
+  // condition if/else
+  if (testFirstName){
+    p.innerHTML = 'Prénom valide';
+  } else {
+    p.innerHTML = 'Prénom non valide'
+  }
+
+  console.log(form.lastName)
+
+  // Ecouter la modification du lastName
+  form.lastName.addEventListener('change', function(){
+    validLastName(this);
+  });
+
+  /********************************** Validation LASTNAME ******************************/
+
+  let validLastName = function(inputLastName){
+    let lastNameRegExp = new RegExp(
+      "^[a-zA-Z ,.'-]+$", 'g'
+      );
+
+  let testLastName = lastNameRegExp.test(inputLastName.value);
+
+  // récupération de la balise suivante (p)
+  let p = inputLastName.nextElementSibling;
+  console.log(testLastName)
+
+  // condition if/else
+  if (testLastName){
+    p.innerHTML = 'Nom valide';
+  } else {
+    p.innerHTML = 'Nom non valide'
+  }
+  }
+
+  console.log(form.address);
+
+  // Ecouter la modification de l'adresse
+  form.address.addEventListener('change', function(){
+    validAddress(this);
+  });
+
+  /********************************** Validation ADRESSE ********************************/
+
+  let validAddress = function(inputAddress){
+    // creation de la regExp pour validation de l'adresse
+    let addressRegExp = new RegExp(
+      "^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+", 'g'
+      );
+
+  let testAddress = addressRegExp.test(inputAddress.value);
+
+  // récupération de la balise suivante (p)
+  let p = inputAddress.nextElementSibling;
+    
+  console.log(testAddress)
+    
+  // condition if/else
+  if (testAddress){
+    p.innerHTML = 'Adresse valide';
+    } else {
+    p.innerHTML = 'Adresse non valide'
+    }
+    }
+    console.log(form.city);
+
+    // Ecouter la modification de l'adresse
+  form.city.addEventListener('change', function(){
+    validCity(this);
+  });
+
+  /********************************** Validation VILLE ********************************/
+  let validCity = function(inputCity){
+    // creation de la regExp pour validation de l'adresse
+    let cityRegExp = new RegExp(
+      "^[a-zA-Z ,.'-]+$", 'g'
+      );
+
+  let testCity = cityRegExp.test(inputCity.value);
+  
+  // récupération de la balise suivante (p)
+  let p = inputCity.nextElementSibling;
+
+  console.log(testCity)
+    
+  // condition if/else
+  if (testCity){
+    p.innerHTML = 'Ville valide';
+    } else {
+    p.innerHTML = 'Ville non valide'
+    }
+    }
 
 
+
+
+}};
+validateFormulaire()
+
+/*Pour les routes POST, l’objet contact envoyé au serveur doit contenir les champs firstName,
+lastName, address, city et email. Le tableau des produits envoyé au back-end doit être un
+array de strings product-ID. Les types de ces champs et leur présence doivent être validés
+avant l’envoi des données au serveur.*/
+
+/*form.email pour récuperer les different elements du form ('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');*/
