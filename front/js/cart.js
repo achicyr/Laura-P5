@@ -139,6 +139,16 @@ function validateFormulaire(){
     validEmail(this);
   });
 
+  //Ecouter la soumission du formulaire 
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (validEmail(form.email) && validFirstName(form.firstName) && validLastName(form.lastName) && validAddress(form.address) && validCity(form.city)){
+      form.submit();
+    }else{
+      alert ("Le formulaire n'est pas valide")
+    }
+  })
+
   /********************************** Validation EMAIL ******************************/
 
   let validEmail = function(inputEmail){
@@ -157,8 +167,10 @@ function validateFormulaire(){
   // condition if/else
   if (testEmail){
     p.innerHTML = 'Email valide';
+    return true;
   } else {
-    p.innerHTML = 'Email non valide'
+    p.innerHTML = 'Email non valide';
+    return false;
   }
   }
   console.log(form.firstName)
@@ -184,8 +196,11 @@ function validateFormulaire(){
   // condition if/else
   if (testFirstName){
     p.innerHTML = 'Prénom valide';
+    return true;
   } else {
-    p.innerHTML = 'Prénom non valide'
+    p.innerHTML = 'Prénom non valide';
+    return false;
+  }
   }
 
   console.log(form.lastName)
@@ -211,8 +226,10 @@ function validateFormulaire(){
   // condition if/else
   if (testLastName){
     p.innerHTML = 'Nom valide';
+    return true;
   } else {
-    p.innerHTML = 'Nom non valide'
+    p.innerHTML = 'Nom non valide';
+    return false;
   }
   }
 
@@ -241,8 +258,10 @@ function validateFormulaire(){
   // condition if/else
   if (testAddress){
     p.innerHTML = 'Adresse valide';
+    return true;
     } else {
-    p.innerHTML = 'Adresse non valide'
+    p.innerHTML = 'Adresse non valide';
+    return false;
     }
     }
     console.log(form.city);
@@ -269,20 +288,41 @@ function validateFormulaire(){
   // condition if/else
   if (testCity){
     p.innerHTML = 'Ville valide';
+    return true;
     } else {
-    p.innerHTML = 'Ville non valide'
+    p.innerHTML = 'Ville non valide';
+    return false;
     }
     }
+};
 
-
-
-
-}};
 validateFormulaire()
+
+
+function postFormulaire() {
+  let btn = document.getElementById("order");
+
+  // Ecouter le panier
+  btn.addEventListener('click', (e) => {
+
+    // récupérer les champs firstName, lastName, address, city et email
+    let firstName = document.getElementById("firstName");
+    let lastName = document.getElementById("lastName");
+    let address = document.getElementById("address");
+    let city = document.getElementById("city");
+    let email = document.getElementById("email");
+
+    //Construction d'un array depuis le local storage
+    let idProducts = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      idProducts.push(localStorage[i].idProduit);
+    }
+    console.log(idProducts);
+
+  })} 
+
 
 /*Pour les routes POST, l’objet contact envoyé au serveur doit contenir les champs firstName,
 lastName, address, city et email. Le tableau des produits envoyé au back-end doit être un
 array de strings product-ID. Les types de ces champs et leur présence doivent être validés
 avant l’envoi des données au serveur.*/
-
-/*form.email pour récuperer les different elements du form ('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');*/
