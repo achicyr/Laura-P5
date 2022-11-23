@@ -143,7 +143,27 @@ function validateFormulaire(){
   form.addEventListener('submit', function(e){
     e.preventDefault();
     if (validEmail(form.email) && validFirstName(form.firstName) && validLastName(form.lastName) && validAddress(form.address) && validCity(form.city)){
-      form.submit();
+      // form.submit();
+      const req = {contact: {}, products: []}
+      Array.from(new FormData(form).entries()).forEach(elt=>{
+          req.contact[elt[0]] = elt[1]
+      })
+      for(let tmp in renderProduct){
+        req.products.push(renderProduct[tmp].id)
+      }
+      console.log(req);
+      fetch('http://localhost:3000/api/products/order', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(req)
+      })
+      .then(x=>x.json())
+      .then(resp=>{
+        console.log(resp);
+        // location.href="./confirmatiojn.html?orderId="
+      })
     }else{
       alert ("Le formulaire n'est pas valide")
     }
