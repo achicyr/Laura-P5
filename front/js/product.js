@@ -131,6 +131,8 @@ function addToCart() {
             choiceString = JSON.stringify(productsList);// il faut convertir la valeur
             localStorage.setItem(productId, choiceString);// ajout du duo clé-valeur dans le localStorage*/
         }
+        const a= confirm("Votre panier a bien été rajouté du produit .... avec la quntitié ...\nVoulez-vous aller au panier ?")
+        if(a)location.href = 'cart.html'
     }
 }
 

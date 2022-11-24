@@ -138,11 +138,14 @@ function validateFormulaire(){
   form.email.addEventListener('change', function(){
     validEmail(this);
   });
+  // city.setCustomValidity('Addresse au mauvais format, veuillez suivre le format du texte par défaut')
 
   //Ecouter la soumission du formulaire 
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    if (validEmail(form.email) && validFirstName(form.firstName) && validLastName(form.lastName) && validAddress(form.address) && validCity(form.city)){
+    if(address.validity.patternMismatch)
+      address.setCustomValidity('Addresse au mauvais format, veuillez suivre le format du texte par défaut')
+    else if (validEmail(form.email) && validFirstName(form.firstName) && validLastName(form.lastName) /*&& validAddress(form.address)*/ && validCity(form.city)){
       // form.submit();
       const req = {contact: {}, products: []}
       Array.from(new FormData(form).entries()).forEach(elt=>{
@@ -163,6 +166,7 @@ function validateFormulaire(){
       .then(resp=>{
         console.log(resp);
         // location.href="./confirmatiojn.html?orderId="
+        // console.log(address.validity);
       })
     }else{
       alert ("Le formulaire n'est pas valide")
@@ -187,6 +191,7 @@ function validateFormulaire(){
   // condition if/else
   if (testEmail){
     p.innerHTML = 'Email valide';
+    p.classList.toggle('ok')
     return true;
   } else {
     p.innerHTML = 'Email non valide';
@@ -216,6 +221,7 @@ function validateFormulaire(){
   // condition if/else
   if (testFirstName){
     p.innerHTML = 'Prénom valide';
+    p.classList.toggle('ok')
     return true;
   } else {
     p.innerHTML = 'Prénom non valide';
@@ -252,7 +258,7 @@ function validateFormulaire(){
     return false;
   }
   }
-
+/*
   console.log(form.address);
 
   // Ecouter la modification de l'adresse
@@ -260,7 +266,8 @@ function validateFormulaire(){
     validAddress(this);
   });
 
-  /********************************** Validation ADRESSE ********************************/
+  /********************************** Validation ADRESSE ********************************
+   * ù/
 
   let validAddress = function(inputAddress){
     // creation de la regExp pour validation de l'adresse
@@ -284,6 +291,10 @@ function validateFormulaire(){
     return false;
     }
     }
+*/
+
+
+
     console.log(form.city);
 
     // Ecouter la modification de l'adresse
