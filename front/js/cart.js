@@ -139,13 +139,34 @@ function validateFormulaire(){
     validEmail(this);
   });
   // city.setCustomValidity('Addresse au mauvais format, veuillez suivre le format du texte par défaut')
+  
+  // setCustomValidity: The HTMLInputElement.setCustomValidity() method sets a custom validity message for the element.
+  address.addEventListener("invalid", () => {
+    if (address.value === "") {
+      address.setCustomValidity("Enter your username!");
+    } else {
+      alert("si je met en commentaire, le title du html s'appliquera à la place")
+      address.setCustomValidity(
+        "Addresse au mauvais format, veuillez suivre le format du texte par défaut"
+      );
+    }
+  })
+  // input event: The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
+  address.addEventListener("input", () => {
+    address.setCustomValidity("ooio");
+    console.log('"iuoiu');
+    //checkValidity: The HTMLSelectElement.checkValidity() method checks whether the element has any constraints and whether it satisfies them. If the element fails its constraints, the browser fires a cancelable invalid event at the element, and then returns false.
+    address.checkValidity();
+  });
 
+function updateValue(e) {
+  log.textContent = e.target.value;
+}
   //Ecouter la soumission du formulaire 
   form.addEventListener('submit', function(e){
+    alert('ok')
     e.preventDefault();
-    if(address.validity.patternMismatch)
-      address.setCustomValidity('Addresse au mauvais format, veuillez suivre le format du texte par défaut')
-    else if (validEmail(form.email) && validFirstName(form.firstName) && validLastName(form.lastName) /*&& validAddress(form.address)*/ && validCity(form.city)){
+    if (validEmail(form.email) && validFirstName(form.firstName) && validLastName(form.lastName) /*&& validAddress(form.address)*/ && validCity(form.city)){
       // form.submit();
       const req = {contact: {}, products: []}
       Array.from(new FormData(form).entries()).forEach(elt=>{
