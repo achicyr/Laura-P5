@@ -1,0 +1,258 @@
+body {
+  color: #fff;
+  min-width: 300px;
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 135px;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 60px;
+  font-weight: 400;
+}
+
+.logo {
+  height: 100px;
+}
+
+.limitedWidthBlockContainer {
+  justify-content: center;
+  display: flex;
+}
+
+.limitedWidthBlock {
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 25px;
+}
+
+:root {
+  --main-color: #3498db;
+  --secondary-color: #2c3e50;
+  --text-color: #3d4c68;
+  --footer-text-color: #a6b0b3;
+  --footer-main-color: #3d424f;
+  --footer-secondary-color: #2d2f3e;
+}
+
+.informations {
+  background-color: var(--main-color);
+  font-size: 13px;
+}
+
+.informations img {
+  height: 17px;
+}
+
+.informations ul {
+  padding-left: 0;
+  display: flex;
+}
+
+.informations ul li {
+  margin-right: 36px;
+  list-style: none;
+  display: flex;
+}
+
+.informations__phone, .informations__mail {
+  margin-right: 10px;
+}
+
+.menu {
+  background-color: #fff;
+}
+
+.menu .limitedWidthBlock {
+  justify-content: space-between;
+  display: flex;
+}
+
+.menu a {
+  align-items: center;
+  text-decoration: none;
+  display: flex;
+}
+
+.menu nav {
+  display: flex;
+}
+
+.menu nav ul {
+  margin: 0;
+  line-height: 130px;
+  display: flex;
+}
+
+.menu nav ul li {
+  color: var(--text-color);
+  margin-left: 50px;
+  list-style: none;
+}
+
+.menu nav ul li:hover {
+  font-weight: 600;
+  color: #3498db !important;
+}
+
+.banniere {
+  width: 100%;
+  height: 550px;
+  object-fit: cover;
+  display: flex;
+}
+
+main {
+  background-color: var(--main-color);
+}
+
+.items {
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 135px;
+  display: flex;
+}
+
+.items a {
+  width: 21%;
+  color: unset;
+  text-decoration: none;
+}
+
+.items a:hover article {
+  box-shadow: 0 0 22px 6px #2a12cee6;
+}
+
+.items article {
+  background-color: var(--secondary-color);
+  width: 100%;
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  padding-top: 25px;
+  display: flex;
+}
+
+.items article img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.items article h3 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.items article p {
+  text-align: center;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  white-space: normal;
+  -webkit-box-orient: vertical;
+  padding-left: 23px;
+  padding-right: 23px;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+footer {
+  color: var(--footer-text-color);
+  flex-direction: column;
+  font-size: 14px;
+  display: flex;
+}
+
+footer .footerMain, footer .footerSecondary {
+  width: 100%;
+}
+
+.footerMain {
+  background-color: var(--footer-main-color);
+  padding: 50px 0;
+}
+
+.footerMain .limitedWidthBlock {
+  justify-content: space-between;
+  display: flex;
+}
+
+.footerMain .limitedWidthBlock div {
+  align-items: center;
+  display: flex;
+}
+
+.footerSecondary {
+  background-color: var(--footer-secondary-color);
+  padding: 25px 0;
+}
+
+@media (max-width: 991.98px) {
+  .informations ul {
+    justify-content: space-around;
+    display: flex;
+  }
+
+  .items a {
+    width: 42%;
+  }
+
+  .footerMain .limitedWidthBlock {
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+  }
+
+  .footerSecondary .limitedWidthBlock p {
+    text-align: center;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .informations ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .informations ul li {
+    margin-bottom: 14px;
+    margin-right: 0;
+  }
+
+  .menu .limitedWidthBlock {
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+  }
+
+  .logo {
+    margin-top: 20px;
+  }
+
+  .menu nav ul {
+    padding: 0;
+    line-height: 80px;
+  }
+
+  .menu nav ul a:first-child li {
+    margin-left: 0;
+  }
+
+  .items a {
+    width: 75%;
+  }
+}
+
+/*# sourceMappingURL=index.80c8f775.css.map */
