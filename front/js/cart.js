@@ -142,12 +142,41 @@ function validateFormulaire(){
   //Ecouter la soumission du formulaire 
   form.addEventListener('submit', function(e){
     e.preventDefault();
+    // if (address.validity.patternMismatch)
+    //   address.setCustomValidity('Adresse incorrect')
     if (validEmail(form.email) && validFirstName(form.firstName) && validLastName(form.lastName) && validAddress(form.address) && validCity(form.city)){
-      form.submit();
+      /*form.submit();*/
+
+      // 2 objets à envoyer au backend
+      const req = {contact: {}, products: []}
+      Array.from(new FormData(form).entries()).forEach(elt=>{
+        req.contact[elt[0]] = elt[1]
+      })
+        for(let tmp in renderProduct){
+          req.products.push(renderProduct[tmp].id)
+        }
+        console.log(req)
+      fetch('http://localhost:3000/api/products/order', {
+        method : "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body :JSON.stringify(req)
+      })
+        .then(x=>x.json())
+        .then(resp=>{
+        console.log(resp);
+        location.href='confirmation.html?orderId='
+        console.log(address.validity);
+        })
+    /*product = {contact:Array.from(new FormData(form).entries()).map(elt=>({[elt[0]]:elt[1]}))}
+    console.log(product)*/
+    
     }else{
       alert ("Le formulaire n'est pas valide")
     }
   })
+  
 
   /********************************** Validation EMAIL ******************************/
 
@@ -167,9 +196,11 @@ function validateFormulaire(){
   // condition if/else
   if (testEmail){
     p.innerHTML = 'Email valide';
+    p.classList.toggle("ok")
     return true;
   } else {
     p.innerHTML = 'Email non valide';
+    p.classList.toggle("notok")
     return false;
   }
   }
@@ -196,12 +227,15 @@ function validateFormulaire(){
   // condition if/else
   if (testFirstName){
     p.innerHTML = 'Prénom valide';
+    p.classList.toggle("ok")
     return true;
   } else {
     p.innerHTML = 'Prénom non valide';
+    p.classList.toggle("notok")
     return false;
   }
   }
+  /********************************** Validation LASTNAME ******************************/
 
   console.log(form.lastName)
 
@@ -210,7 +244,6 @@ function validateFormulaire(){
     validLastName(this);
   });
 
-  /********************************** Validation LASTNAME ******************************/
 
   let validLastName = function(inputLastName){
     let lastNameRegExp = new RegExp(
@@ -226,21 +259,22 @@ function validateFormulaire(){
   // condition if/else
   if (testLastName){
     p.innerHTML = 'Nom valide';
+    p.classList.toggle("ok")
     return true;
   } else {
     p.innerHTML = 'Nom non valide';
+    p.classList.toggle("notok")
     return false;
   }
   }
-
+  /********************************** Validation ADRESSE ********************************/
+  
   console.log(form.address);
 
   // Ecouter la modification de l'adresse
   form.address.addEventListener('change', function(){
     validAddress(this);
   });
-
-  /********************************** Validation ADRESSE ********************************/
 
   let validAddress = function(inputAddress){
     // creation de la regExp pour validation de l'adresse
@@ -258,20 +292,25 @@ function validateFormulaire(){
   // condition if/else
   if (testAddress){
     p.innerHTML = 'Adresse valide';
+    p.classList.toggle("ok")
     return true;
     } else {
     p.innerHTML = 'Adresse non valide';
+    p.classList.toggle("notok")
     return false;
     }
     }
-    console.log(form.city);
+
+   
+  /********************************** Validation VILLE ********************************/
+  
+  console.log(form.city);
 
     // Ecouter la modification de l'adresse
   form.city.addEventListener('change', function(){
     validCity(this);
   });
 
-  /********************************** Validation VILLE ********************************/
   let validCity = function(inputCity){
     // creation de la regExp pour validation de l'adresse
     let cityRegExp = new RegExp(
@@ -288,9 +327,11 @@ function validateFormulaire(){
   // condition if/else
   if (testCity){
     p.innerHTML = 'Ville valide';
+    p.classList.toggle("ok")
     return true;
     } else {
     p.innerHTML = 'Ville non valide';
+    p.classList.toggle("notok")
     return false;
     }
     }
@@ -299,27 +340,28 @@ function validateFormulaire(){
 validateFormulaire()
 
 
-function postFormulaire() {
-  let btn = document.getElementById("order");
+// function postFormulaire() {
+//   let btn = document.getElementById("order");
 
-  // Ecouter le panier
-  btn.addEventListener('click', (e) => {
+//   // Ecouter le panier
+//   btn.addEventListener('click', (e) => {
 
-    // récupérer les champs firstName, lastName, address, city et email
-    let firstName = document.getElementById("firstName");
-    let lastName = document.getElementById("lastName");
-    let address = document.getElementById("address");
-    let city = document.getElementById("city");
-    let email = document.getElementById("email");
+//     // récupérer les champs firstName, lastName, address, city et email
+//     let firstName = document.getElementById("firstName");
+//     let lastName = document.getElementById("lastName");
+//     let address = document.getElementById("address");
+//     let city = document.getElementById("city");
+//     let email = document.getElementById("email");
 
-    //Construction d'un array depuis le local storage
-    let idProducts = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      idProducts.push(localStorage[i].idProduit);
-    }
-    console.log(idProducts);
+//     //Construction d'un array depuis le local storage
+//     let idProducts = [];
+//     for (let i = 0; i < localStorage.length; i++) {
+//       idProducts.push(localStorage[i].idProduit);
+//     }
+//     console.log(idProducts);
 
-  })} 
+
+//   })} 
 
 
 /*Pour les routes POST, l’objet contact envoyé au serveur doit contenir les champs firstName,

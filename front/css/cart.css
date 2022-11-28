@@ -1,7 +1,10 @@
 /*********/
 /*GENERAL*/
 /*********/
-
+/*input{transition:background .3s;}
+form input:not([type="submit"]):not(:focus):invalid{background: red;}
+form input:not([type="submit"]):not(:focus):valid{background: green;}
+form input:not([type="submit"]):not(:focus):placeholder-shown{background: white !important;}*/
 main {
 	padding-bottom: 90px;
 }
@@ -109,6 +112,12 @@ h2 {
 }
 .cart__order__form__question input:focus {
 	outline: none;
+}
+.cart__order__form__question p.ok{
+	color:#91F396;
+}
+.cart__order__form__question p.notok{
+	color:#FF0000;
 }
 .cart__order__form__question p {
 	margin: 0;
