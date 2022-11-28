@@ -131,7 +131,7 @@ function addToCart() {
             choiceString = JSON.stringify(productsList);// il faut convertir la valeur
             localStorage.setItem(productId, choiceString);// ajout du duo clé-valeur dans le localStorage*/
         }
-        let a = confirm("Le canapé ${name} ${color} a été ajouté en ${nbexemplaires} exemplaires à votre panier.\nVoulez-vous aller au panier ?")
+        let a = confirm(`Le canapé ${oneProduct.name} ${choice.color} a été ajouté en ${choice.quantity} exemplaires à votre panier.\nVoulez-vous aller au panier ?`)
         if(a)location.href = 'cart.html'
     }
 }

@@ -166,9 +166,10 @@ function validateFormulaire(){
         .then(x=>x.json())
         .then(resp=>{
         console.log(resp);
-        localStorage.setItem("orderId", req.orderId)
         
-        location.href='confirmation.html?orderId='
+        localStorage.setItem("orderId", resp.orderId)
+
+        location.href=`confirmation.html?orderId = ${resp.orderId}`
         console.log(address.validity);
         })
     /*product = {contact:Array.from(new FormData(form).entries()).map(elt=>({[elt[0]]:elt[1]}))}
