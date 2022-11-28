@@ -166,6 +166,8 @@ function validateFormulaire(){
         .then(x=>x.json())
         .then(resp=>{
         console.log(resp);
+        localStorage.setItem("orderId", req.orderId)
+        
         location.href='confirmation.html?orderId='
         console.log(address.validity);
         })
