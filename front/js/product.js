@@ -74,8 +74,8 @@ function addToCart() {
         id: oneProduct._id,
         color: colorsSelect.value,
         quantity: quantityDiv.value,
-        
     }
+
     console.log(choice)
 
     // on déclare le productId qui prend la valeur du nom + de la couleur
@@ -102,8 +102,9 @@ function addToCart() {
     if (colorsSelect.value == "") {
         result = window.alert("Choisir la couleur")
     }
-    else if (quantityDiv.value == 0) { // si la quantité est = 0 alors il faut retourner une alerte ("Quantité invalide")
-        result = window.alert("Quantité invalide")
+    else if (quantityDiv.value < 1 || quantityDiv.value >=100 ) { // si la quantité n'est pas comprise entre 0 et 100 alors on retourne une alerte ("Quantité invalide")
+        result = window.alert("Choisissez une quantité comprise entre 1 et 100 exemplaires")
+        console.log(quantityDiv.value)
     } else {
         console.log(renderProduct)
         if (renderProduct[productId]) {
@@ -137,6 +138,7 @@ function addToCart() {
 }
 
 let button = document.querySelector("#addToCart");
+
 
 // enregistrer les donnees de selection de produit en local 
 window.onload = function () {

@@ -169,7 +169,7 @@ function validateFormulaire(){
         
         localStorage.setItem("orderId", resp.orderId)
 
-        location.href=`confirmation.html?orderId = ${resp.orderId}`
+        location.href=`confirmation.html?orderId=${resp.orderId}`
         console.log(address.validity);
         })
     /*product = {contact:Array.from(new FormData(form).entries()).map(elt=>({[elt[0]]:elt[1]}))}
@@ -200,10 +200,12 @@ function validateFormulaire(){
   if (testEmail){
     p.innerHTML = 'Email valide';
     p.classList.toggle("ok")
+    p.classList.remove("notok")
     return true;
   } else {
     p.innerHTML = 'Email non valide';
     p.classList.toggle("notok")
+    p.classList.remove("ok")
     return false;
   }
   }
@@ -231,10 +233,12 @@ function validateFormulaire(){
   if (testFirstName){
     p.innerHTML = 'Prénom valide';
     p.classList.toggle("ok")
+    p.classList.remove("notok")
     return true;
   } else {
     p.innerHTML = 'Prénom non valide';
     p.classList.toggle("notok")
+    p.classList.remove("ok")
     return false;
   }
   }
@@ -263,10 +267,12 @@ function validateFormulaire(){
   if (testLastName){
     p.innerHTML = 'Nom valide';
     p.classList.toggle("ok")
+    p.classList.remove("notok")
     return true;
   } else {
     p.innerHTML = 'Nom non valide';
     p.classList.toggle("notok")
+    p.classList.remove("ok")
     return false;
   }
   }
@@ -296,10 +302,12 @@ function validateFormulaire(){
   if (testAddress){
     p.innerHTML = 'Adresse valide';
     p.classList.toggle("ok")
+    p.classList.remove("notok")
     return true;
     } else {
     p.innerHTML = 'Adresse non valide';
     p.classList.toggle("notok")
+    p.classList.remove("ok")
     return false;
     }
     }
@@ -331,10 +339,12 @@ function validateFormulaire(){
   if (testCity){
     p.innerHTML = 'Ville valide';
     p.classList.toggle("ok")
+    p.classList.remove("notok")
     return true;
     } else {
     p.innerHTML = 'Ville non valide';
     p.classList.toggle("notok")
+    p.classList.remove("ok")
     return false;
     }
     }
