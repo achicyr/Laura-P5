@@ -17,3 +17,5 @@ Votre client est Kanap, une marque de canapés qui vend ses produits depuis sa b
 ● Interagir avec un web service avec JavaScript
 
 ● Gérer des événements JavaScript
+
+Lien du site : https://cyber-laura.github.io/Kanap/front/html/index.html
